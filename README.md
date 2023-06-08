@@ -17,6 +17,10 @@ Pixie has adopted the [Contributor Covenant](https://github.com/pixie-io/docs.px
 To run in development mode, run the following commands:
 
 ```shell
+# Until https://github.com/pixie-io/docs.px.dev/issues/264 is fixed
+# the legacy openssl provider must be used to prevent gatsby from crashing
+export NODE_OPTIONS=--openssl-legacy-provider
+
 yarn install
 yarn start
 ```
