@@ -105,6 +105,16 @@ exports.createPages = ({
                 languages,
                 globalUrlTree,
                 availableLanguages,
+                availableClouds: [
+                  {
+                    name: "Community Cloud",
+                    slug: "https://work.withpixie.ai",
+                  },
+                  {
+                    name: "Cosmic Cloud",
+                    slug: "https://work.getcosmic.ai",
+                  },
+                ],
               },
             });
           });

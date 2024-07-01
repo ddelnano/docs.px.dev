@@ -25,12 +25,15 @@ import React from 'react';
 import MainThemeProvider from './src/components/mainThemeProvider.tsx';
 import './src/global.css';
 import SidebarProvider from './src/components/sidebar/sidebarProvider.tsx';
+import CloudProvider from './src/components/cloudProvider.tsx';
 
 // eslint-disable-next-line import/prefer-default-export
 export const wrapRootElement = ({ element }) => (
   <MainThemeProvider>
-    <SidebarProvider>
-      {element}
-    </SidebarProvider>
+    <CloudProvider>
+      <SidebarProvider>
+        {element}
+      </SidebarProvider>
+    </CloudProvider>
   </MainThemeProvider>
 );

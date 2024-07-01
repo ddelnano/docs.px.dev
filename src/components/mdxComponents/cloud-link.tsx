@@ -16,17 +16,25 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React from 'react';
-import MDX from '@mdx-js/runtime';
-import mdxComponents from '../components/mdxComponents';
+import * as React from 'react';
+import { makeStyles, TypographyVariant } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import { CloudContext } from '../cloudProvider';
 
-const scope = {
-  availableClouds: ["one", "two", "three"],
-};
 
-const parseMd = (input) => (
-  <MDX components={mdxComponents}>
-    {input}
-  </MDX>
+interface Props {
+  id: string;
+  variant: TypographyVariant
+}
+
+const CloudLink: React.FC<Props> = ({ id, children, url}) => (
+  <div>
+      {children}
+      <CloudContext.Consumer>
+      {({ selectedCloud }) => (
+        <a href={`${selectedCloud.slug}/${url}`}>{selectedCloud.name} {children}</a>
+      )}
+      </CloudContext.Consumer>
+  </div>
 );
-export default parseMd;
+export default CloudLink;
