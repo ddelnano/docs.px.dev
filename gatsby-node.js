@@ -26,6 +26,16 @@ const tableDocumentation = require('./external/datatable_documentation.json');
 
 const globalUrlTree = [];
 const languages = require('./available-languages');
+const availableClouds = [
+  {
+    name: "Community Cloud",
+    baseUrl: "https://work.withpixie.ai",
+  },
+  {
+    name: "Cosmic Cloud",
+    baseUrl: "https://work.getcosmic.ai",
+  },
+];
 
 const removeLanguageFromUrl = (url) => {
   const slugTree = url.split('/')
@@ -105,16 +115,7 @@ exports.createPages = ({
                 languages,
                 globalUrlTree,
                 availableLanguages,
-                availableClouds: [
-                  {
-                    name: "Community Cloud",
-                    slug: "https://work.withpixie.ai",
-                  },
-                  {
-                    name: "Cosmic Cloud",
-                    slug: "https://work.getcosmic.ai",
-                  },
-                ],
+                availableClouds: availableClouds,
               },
             });
           });

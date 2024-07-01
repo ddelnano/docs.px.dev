@@ -17,24 +17,43 @@
  */
 
 import * as React from 'react';
+import path from 'path';
 import { makeStyles, TypographyVariant } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import { CloudContext } from '../cloudProvider';
+import { CloudLinkContext } from '../cloudLinkProvider';
 
+const useStyles = makeStyles((theme: Theme) => ({
+  link: {
+    color: theme.palette.secondary.main,
+    fontFamily: 'inherit',
+    fontStyle: 'inherit',
+    fontSize: 'inherit',
+    textDecoration: 'none',
+    '&:hover': {
+      color: theme.palette.secondary.main,
+      textDecoration: 'underline',
+    },
+  },
+}));
 
 interface Props {
   id: string;
-  variant: TypographyVariant
+  children: string;
+  url: string;
 }
 
-const CloudLink: React.FC<Props> = ({ id, children, url}) => (
-  <div>
-      {children}
-      <CloudContext.Consumer>
-      {({ selectedCloud }) => (
-        <a href={`${selectedCloud.slug}/${url}`}>{selectedCloud.name} {children}</a>
-      )}
-      </CloudContext.Consumer>
-  </div>
-);
+const CloudLink: React.FC<Props> = ({ id, children, url}) => {
+  
+  const classes = useStyles();
+  return (
+    <div>
+      <CloudLinkContext.Consumer>
+        {({ selectedCloud }) => (
+          <a href={path.join(selectedCloud.baseUrl, url)} className={classes.link} >
+            {children}
+          </a>
+        )}
+      </CloudLinkContext.Consumer>
+    </div>
+)};
 export default CloudLink;

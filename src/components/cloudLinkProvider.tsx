@@ -18,40 +18,28 @@
 
 import * as React from 'react';
 
-// const initialCloud = {
-//   "name": "Community Cloud",
-//   "slug": "https://work.withpixe.ai",
-// };
 const initialCloud = {
-  "name": "Cosmic Cloud",
-  "slug": "https://work.getcosmic.ai",
+  "name": "Community Cloud",
+  "baseUrl": "https://work.withpixe.ai",
 };
 
-export const CloudContext = React.createContext(
+export const CloudLinkContext = React.createContext(
   {
     selectedCloud: initialCloud,
     setSelectedCloud: (cloud) => { },
-    // setSelectedCloud: (cloud) => {
-    //   console.log(cloud);
-    //   console.log(selectedCloud);
-    //   selectedCloud = cloud;
-    // },
   },
 );
-export default function CloudProvider({ children }) {
+export default function CloudLinkProvider({ children }) {
 
   const [selectedCloud, setSelectedCloud] = React.useState(initialCloud);
-  // const setSelectedCloud = (cloud) => {
-  //   setTheme(theme === 'light' ? 'dark' : 'light');
-  // };
   return (
-    <CloudContext.Provider
+    <CloudLinkContext.Provider
       value={{
         selectedCloud,
         setSelectedCloud,
       }}
     >
     {children}
-    </CloudContext.Provider>
+    </CloudLinkContext.Provider>
   );
 }

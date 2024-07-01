@@ -20,10 +20,6 @@ import React from 'react';
 import MDX from '@mdx-js/runtime';
 import mdxComponents from '../components/mdxComponents';
 
-const scope = {
-  availableClouds: ["one", "two", "three"],
-};
-
 const parseMd = (input) => (
   <MDX components={mdxComponents}>
     {input}

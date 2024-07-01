@@ -35,12 +35,22 @@ import slackIcon from './images/slack-icon.svg';
 import githubIcon from './images/github-icon.svg';
 import SearchResultsDropdown from './search-results-dropdown';
 import languages from '../../available-languages';
-// import CloudProvider from './cloudProvider';
-import { CloudContext } from './cloudProvider';
+import { CloudLinkContext } from './cloudLinkProvider';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
     zIndex: theme.zIndex.modal + 1,
+  },
+  link: {
+    color: theme.palette.secondary.main,
+    fontFamily: 'inherit',
+    fontStyle: 'inherit',
+    fontSize: 'inherit',
+    textDecoration: 'none',
+    '&:hover': {
+      color: theme.palette.secondary.main,
+      textDecoration: 'underline',
+    },
   },
   toolbar: {
     flexGrow: 1,
@@ -122,7 +132,7 @@ const useStyles = makeStyles((theme) => ({
     right: 0,
     zIndex: 1,
     backgroundColor: theme.palette.type === 'light' ? '#212324' : '#212324',
-    borderRadius: '7px',
+    borderRadius: '10px',
 
   },
   cloudMenuItem: {
@@ -131,11 +141,11 @@ const useStyles = makeStyles((theme) => ({
     lineHeight: '24px',
     padding: '14px',
     textAlign: 'center',
-    width: '52px',
+    width: '60px',
     '& a': {
       textDecoration: 'none',
       display: 'block',
-      margin: '-14px',
+      margin: '-20px',
       padding: '14px',
       fontStyle: 'inherit',
       color: 'inherit',
@@ -169,8 +179,8 @@ const useStyles = makeStyles((theme) => ({
 
 interface Props {
   location: string,
-  availableLanguages: { lang: string, slug: string }[],
-  availableClouds: { name: string, slug: string }[],
+  availableLanguages: { lang: string, baseUrl: string }[],
+  availableClouds: { name: string, baseUrl: string }[],
   lang: string,
   theme: string,
   onThemeTypeSwitch: any
@@ -203,8 +213,6 @@ const Header = ({
     setDrawerOpen(!drawerOpen);
     setSidebarOpen(!sidebarOpen);
   };
-
-  // const [selectedCloud, setSelectedCloud] = React.useState(availableClouds[0]);
 
   const [openSupportMenu, setOpenSupportMenu] = React.useState(false);
   const [openLanguageMenu, setOpenLanguageMenu] = React.useState(false);
@@ -343,7 +351,7 @@ const Header = ({
                   </Hidden>
                 )}
                 {(availableClouds &&
-                  (<CloudContext.Consumer>
+                  (<CloudLinkContext.Consumer>
                   {({selectedCloud, setSelectedCloud}) => (
                     <Hidden implementation='css'>
                       <ClickAwayListener onClickAway={() => setOpenCloudMenu(false)}>
@@ -353,33 +361,28 @@ const Header = ({
                           size='inherit'
                           aria-controls='support-menu'
                           aria-haspopup='true'
-                          // onClick={() => setOpenCloudMenu((prev) => !prev)}
-                          onClick={() => {
-                            console.log('Running');
-                            setOpenCloudMenu((prev) => !prev);
-                          }}
+                          onClick={() => setOpenCloudMenu((prev) => !prev)}
                         >
+                          Cloud backend: <div className={classes.link}>  {selectedCloud?.name}</div>
                           <span className={classes.dropIcon} />
                         </Button>
                       </ClickAwayListener>
                       <div className={classes.dropMenuRef}>
                         {openCloudMenu ? (
                           <div className={classes.cloudMenu}>
-                            {(availableClouds || []).map((l) => (
+                            {(availableClouds || []).map((cloud) => (
                                 <div
-                                  key={l.name}
+                                  key={cloud.name}
                                   className={classes.cloudMenuItem}
                                   onClick={() => {
-                                    console.log('Selected Cloud:', selectedCloud);
-                                    // console.log('set Selected Cloud:', setSelectedCloud);
-                                    setSelectedCloud(l);
+                                    setSelectedCloud(cloud);
                                     setOpenSupportMenu(false)
                                   }}
                                 >
                                   <Link
                                     rel='noopener noreferrer'
                                   >
-                                    {l.name}
+                                    {cloud.name}
                                   </Link>
                                 </div>
                             ))}
@@ -389,7 +392,7 @@ const Header = ({
                       </div>
                     </Hidden>
                   )}
-                </CloudContext.Consumer>
+                </CloudLinkContext.Consumer>
                 ))}
                 <SearchResultsDropdown />
                 <Hidden mdDown implementation='css'>
