@@ -2,7 +2,7 @@
 title: "Air Gapped Pixie"
 metaTitle: "Install | Install Guides | Air Gapped Pixie"
 metaDescription: "How to install Pixie in an air gapped environment."
-order: 3
+order: 4
 redirect_from:
     - /airgap
 ---
