@@ -46,14 +46,12 @@ const CloudLink: React.FC<Props> = ({ id, children, url}) => {
   
   const classes = useStyles();
   return (
-    <div>
-      <CloudLinkContext.Consumer>
-        {({ selectedCloud }) => (
-          <a href={path.join(selectedCloud.baseUrl, url)} className={classes.link} >
-            {children}
-          </a>
-        )}
-      </CloudLinkContext.Consumer>
-    </div>
+    <CloudLinkContext.Consumer>
+      {({ selectedCloud }) => (
+        <a href={path.join(selectedCloud.baseUrl, url)} className={classes.link} >
+          {children}
+        </a>
+      )}
+    </CloudLinkContext.Consumer>
 )};
 export default CloudLink;
