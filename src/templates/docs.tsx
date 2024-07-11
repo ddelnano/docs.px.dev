@@ -72,7 +72,6 @@ const MDXDocsRender = ((props: any) => {
     pageContext,
   } = props;
   // eslint-disable-next-line react/destructuring-assignment
-  console.log("Docs MDX", data)
   const { availableClouds, availableLanguages, lang } = pageContext;
   const {
     allMdx,

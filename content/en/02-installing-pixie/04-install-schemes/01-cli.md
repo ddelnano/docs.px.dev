@@ -103,8 +103,7 @@ rpm -i pixie-px.x86_64.rpm
   Please refer to <a href="/reference/admin/environment-configs">Environment-Specific Configurations</a> for other configurations that should be set for your specific Kubernetes environment.
 </Alert>
 
-<CloudMarkdownWithExport url="/">
-</CloudMarkdownWithExport>
+<CliDeployInstructions />
 
 
 Pixie will deploy pods to the `pl`, `px-operator`, and `olm`(if deploying the OLM) namespaces.

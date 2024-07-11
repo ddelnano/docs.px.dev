@@ -83,7 +83,6 @@ const CodeRenderer = withStyles((theme) => ({
   const {
     classes, code, wrap, lang,
   } = props;
-  console.log("Code Renderer", code)
   const optionsArr = props.className ? props.className.split(':') : [''];
   const options = {
     hasNumbers: optionsArr.some((o) => o === 'numbers' || o === 'language-numbers'),

@@ -20,10 +20,7 @@ import * as React from 'react';
 import path from 'path';
 import { makeStyles } from '@material-ui/core/styles';
 import { CloudLinkContext } from '../cloudLinkProvider';
-import Markdown from 'react-markdown'
-import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter'
 import CodeRenderer from './codeRenderer';
-import Children from 'react-children-utilities';
 
 const useStyles = makeStyles((theme: Theme) => ({
   link: {
@@ -41,10 +38,9 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 interface Props {
   children: string;
-  url: string;
 }
 
-export const CloudMarkdownWithExport: React.FC<Props> = ({ children, url }) => {
+export const CliDeployInstructions: React.FC<Props> = ({ children }) => {
   const codeBlock = `
 # List Pixie deployment options.
 px deploy --help
@@ -66,14 +62,19 @@ px deploy --pem_memory_limit=1Gi
     <CloudLinkContext.Consumer>
       {({ selectedCloud }) => (
         <CodeRenderer
-          code={codeBlock.replaceAll("@@", selectedCloud.baseUrl)}
+          code={codeBlock.replaceAll("@@", selectedCloud.cloudAddr)}
           language='bash' />
       )}
     </CloudLinkContext.Consumer>
   );
 };
 
-export const CloudLink: React.FC<Props> = ({ children, url }) => {
+interface CloudLinkProps {
+  children: string;
+  url: string;
+}
+
+export const CloudLink: React.FC<CloudLinkProps> = ({ children, url }) => {
   const classes = useStyles();
   return (
     <CloudLinkContext.Consumer>
