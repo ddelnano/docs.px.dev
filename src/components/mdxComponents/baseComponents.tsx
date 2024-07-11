@@ -32,8 +32,9 @@ import AnchorTag from './anchor';
 import CodeRenderer from './codeRenderer';
 import ListItem from './listItem';
 import HLink from './h-link';
-import CloudLink from './cloud-link';
+import { CloudLink, CloudMarkdownWithExport } from './cloud-link';
 import PoiTooltip from '../poi-tooltip/poi-tooltip';
+import Markdown from 'react-markdown'
 
 const getChildren = (props) => props.children;
 const getLanguage = (props) => (props.className ? props.className.replace('language-', '') : 'bash');
@@ -92,4 +93,15 @@ export default {
   Alert,
   PoiTooltip,
   CloudLink: (props: any) => <CloudLink {...props} />,
+  // Markdown: (props: any) => <Markdown {...props} />,
+  // CodeRenderer: (props: any) => <CodeRenderer {...props} />,
+  // CodeRenderer: (props: any) => {
+  //   console.log("Within baseComponents CodeRenderer", props)
+  //   return (
+  //   <CodeRenderer
+  //     {...props}
+  //     code={getChildren(props)}
+  //   />
+  // )},
+  CloudMarkdownWithExport: (props: any) => <CloudMarkdownWithExport {...props} />,
 };

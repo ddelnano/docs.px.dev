@@ -20,6 +20,10 @@ import * as React from 'react';
 import path from 'path';
 import { makeStyles } from '@material-ui/core/styles';
 import { CloudLinkContext } from '../cloudLinkProvider';
+import Markdown from 'react-markdown'
+import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter'
+import CodeRenderer from './codeRenderer';
+import Children from 'react-children-utilities';
 
 const useStyles = makeStyles((theme: Theme) => ({
   link: {
@@ -40,7 +44,36 @@ interface Props {
   url: string;
 }
 
-const CloudLink: React.FC<Props> = ({ children, url }) => {
+export const CloudMarkdownWithExport: React.FC<Props> = ({ children, url }) => {
+  const codeBlock = `
+# List Pixie deployment options.
+px deploy --help
+
+# Deploy the Pixie Platform in your K8s cluster (No OLM present on cluster).
+export PL_CLOUD_ADDR=@@
+px deploy
+
+# Deploy the Pixie Platform in your K8s cluster (OLM already exists on cluster).
+export PL_CLOUD_ADDR=@@
+px deploy --deploy_olm=false
+
+# Deploy Pixie with a specific memory limit (2Gi is the default, 1Gi is the minimum recommended)
+export PL_CLOUD_ADDR=@@
+px deploy --pem_memory_limit=1Gi
+
+  `;
+  return (
+    <CloudLinkContext.Consumer>
+      {({ selectedCloud }) => (
+        <CodeRenderer
+          code={codeBlock.replaceAll("@@", selectedCloud.baseUrl)}
+          language='bash' />
+      )}
+    </CloudLinkContext.Consumer>
+  );
+};
+
+export const CloudLink: React.FC<Props> = ({ children, url }) => {
   const classes = useStyles();
   return (
     <CloudLinkContext.Consumer>
@@ -52,4 +85,3 @@ const CloudLink: React.FC<Props> = ({ children, url }) => {
     </CloudLinkContext.Consumer>
   );
 };
-export default CloudLink;
